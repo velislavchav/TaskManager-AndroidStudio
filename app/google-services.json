@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "812347766883",
+    "firebase_url": "https://day-scheduler-androidstudio.firebaseio.com",
+    "project_id": "day-scheduler-androidstudio",
+    "storage_bucket": "day-scheduler-androidstudio.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812347766883:android:11e3c8d717a532c166e056",
+        "android_client_info": {
+          "package_name": "com.example.day_schedule"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812347766883-v3gpqv1vb0enamp672m03otnbeecnchs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.day_schedule",
+            "certificate_hash": "36c1aebfcc2bb2f70cb929bf9d5bdcf55060ce7d"
+          }
+        },
+        {
+          "client_id": "812347766883-ras9osppjf8hg0lt5e08akojcppa7tde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5E6fRUB7VY2GYGdDKKI8fxkt0fcMlES0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812347766883-ras9osppjf8hg0lt5e08akojcppa7tde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
