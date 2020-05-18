@@ -40,7 +40,7 @@
                 android:textSize="18sp"
                 android:textColor="#4A4E6A"
                 android:layout_marginTop="8dp"
-                android:text="Finish Them Quickly Today"
+                android:text="Finish Them Quickly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal" />

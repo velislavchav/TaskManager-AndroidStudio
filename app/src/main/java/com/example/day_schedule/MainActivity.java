@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         list = new ArrayList<MyToDo>();
 
         // get data from firebase
-        reference = FirebaseDatabase.getInstance().getReference().child("Scheduler");
+        reference = FirebaseDatabase.getInstance().getReference().child("TasksBox");
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
