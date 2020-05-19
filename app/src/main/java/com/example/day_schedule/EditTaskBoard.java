@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -22,16 +21,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Random;
 
-public class NewTaskActivity extends AppCompatActivity {
-    TextView titlepage, addtitle, adddescription;
-    EditText titletodo, descriptiontodo;
-    Button btnSaveTask, btnCancel;
+public class EditTaskBoard extends AppCompatActivity {
+    EditText toDoTitle, toDoDescription;
+    Button btnUpdateTask, btnDeleteTask;
     DatabaseReference reference;
-    Integer todoNum = new Random().nextInt();
-    String keytodo = Integer.toString(todoNum);
 
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
@@ -39,16 +33,17 @@ public class NewTaskActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_task);
+        setContentView(R.layout.activity_edit_task_board);
 
-        titlepage = findViewById(R.id.titlepage);
-        addtitle = findViewById(R.id.addtitle);
-        adddescription = findViewById(R.id.adddesc);
-        titletodo = findViewById(R.id.titletodo);
-        descriptiontodo = findViewById(R.id.descrtodo);
-        btnSaveTask = findViewById(R.id.btnSaveTask);
-        btnCancel = findViewById(R.id.btnCancel);
+        toDoTitle = findViewById(R.id.titletodo);
+        toDoDescription = findViewById(R.id.descrtodo);
         mDisplayDate = findViewById(R.id.selectdate);
+        btnUpdateTask = findViewById(R.id.btnUpdateTask);
+
+        // get the value from previous state
+        toDoTitle.setText(getIntent().getStringExtra("title"));
+        toDoDescription.setText(getIntent().getStringExtra("description"));
+        mDisplayDate.setText(getIntent().getStringExtra("date"));
 
         mDisplayDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,7 +55,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                     DatePickerDialog dialog = new DatePickerDialog(
-                            NewTaskActivity.this,
+                            EditTaskBoard.this,
                             android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                             mDateSetListener,
                             day, month, year);
@@ -71,34 +66,36 @@ public class NewTaskActivity extends AppCompatActivity {
             }
         });
 
-       mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-           @Override
-           public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-               month += 1;
-               String date = dayOfMonth + "/" + month + "/" + year;
-               mDisplayDate.setText(date);
-           }
-       };
+        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month += 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
+                mDisplayDate.setText(date);
+            }
+        };
 
-        btnSaveTask.setOnClickListener(new View.OnClickListener() {
+        final String toDoKey = getIntent().getStringExtra("key");
+        // set event listeners for buttons
+        btnUpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task-" + todoNum);
+                reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task-" + toDoKey);
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        dataSnapshot.getRef().child("title").setValue(titletodo.getText().toString());
-                        dataSnapshot.getRef().child("description").setValue(descriptiontodo.getText().toString());
+                        dataSnapshot.getRef().child("title").setValue(toDoTitle.getText().toString());
+                        dataSnapshot.getRef().child("description").setValue(toDoDescription.getText().toString());
                         dataSnapshot.getRef().child("date").setValue(mDisplayDate.getText().toString());
-                        dataSnapshot.getRef().child("key").setValue(keytodo);
+                        dataSnapshot.getRef().child("key").setValue(toDoKey);
 
-                        Intent a = new Intent(NewTaskActivity.this, MainActivity.class);
+                        Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
                         startActivity(a);
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-                        
+
                     }
                 });
             }

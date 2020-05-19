@@ -4,13 +4,23 @@ public class MyToDo {
     String title;
     String description;
     String date;
+    String key;
 
     public MyToDo() {} // second constrcutor for using MyToDo.class method
 
-    public MyToDo(String title, String description, String date) {
+    public MyToDo(String title, String description, String date, String key) {
         this.title = title;
         this.description = description;
         this.date = date;
+        this.key = key;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public String getTitle() {
