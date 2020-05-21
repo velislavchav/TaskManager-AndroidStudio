@@ -13,7 +13,10 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +42,7 @@ public class EditTaskBoard extends AppCompatActivity {
         toDoDescription = findViewById(R.id.descrtodo);
         mDisplayDate = findViewById(R.id.selectdate);
         btnUpdateTask = findViewById(R.id.btnUpdateTask);
+        btnDeleteTask = findViewById(R.id.btnDeleteTask);
 
         // get the value from previous state
         toDoTitle.setText(getIntent().getStringExtra("title"));
@@ -75,19 +79,19 @@ public class EditTaskBoard extends AppCompatActivity {
             }
         };
 
-        final String toDoKey = getIntent().getStringExtra("key");
         // set event listeners for buttons
+        final String toDoKey = getIntent().getStringExtra("key");
+        reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task" + toDoKey);
+
         btnUpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task-" + toDoKey);
-                reference.addValueEventListener(new ValueEventListener() {
+                reference.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        dataSnapshot.getRef().child("title").setValue(toDoTitle.getText().toString());
-                        dataSnapshot.getRef().child("description").setValue(toDoDescription.getText().toString());
-                        dataSnapshot.getRef().child("date").setValue(mDisplayDate.getText().toString());
-                        dataSnapshot.getRef().child("key").setValue(toDoKey);
+                        reference.child("title").setValue(toDoTitle.getText().toString());
+                        reference.child("description").setValue(toDoDescription.getText().toString());
+                        reference.child("date").setValue(mDisplayDate.getText().toString());
 
                         Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
                         startActivity(a);
@@ -95,9 +99,27 @@ public class EditTaskBoard extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                        Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     }
                 });
+                }
+            });
+
+        btnDeleteTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 reference.removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                     @Override
+                     public void onComplete(@NonNull Task<Void> task) {
+                          if(task.isSuccessful()) {
+                              Toast.makeText(getApplicationContext(), "Successfully deleted task", Toast.LENGTH_SHORT).show();
+                              Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
+                              startActivity(a);
+                          } else {
+                              Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                          }
+                     }
+                 });
             }
         });
     }

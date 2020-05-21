@@ -83,7 +83,7 @@ public class NewTaskActivity extends AppCompatActivity {
         btnSaveTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task-" + todoNum);
+                reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task" + todoNum);
                 reference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
