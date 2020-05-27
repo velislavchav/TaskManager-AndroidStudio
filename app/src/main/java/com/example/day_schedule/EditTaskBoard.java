@@ -27,7 +27,7 @@ import java.util.Calendar;
 
 public class EditTaskBoard extends AppCompatActivity {
     EditText toDoTitle, toDoDescription;
-    Button btnUpdateTask, btnDeleteTask;
+    Button btnUpdateTask, btnDeleteTask, btnCancel;
     DatabaseReference reference;
 
     private TextView mDisplayDate;
@@ -43,6 +43,7 @@ public class EditTaskBoard extends AppCompatActivity {
         mDisplayDate = findViewById(R.id.selectdate);
         btnUpdateTask = findViewById(R.id.btnUpdateTask);
         btnDeleteTask = findViewById(R.id.btnDeleteTask);
+        btnCancel = findViewById(R.id.btnCancelUpdate);
 
         // get the value from previous state
         toDoTitle.setText(getIntent().getStringExtra("title"));
@@ -120,6 +121,14 @@ public class EditTaskBoard extends AppCompatActivity {
                           }
                      }
                  });
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
+                startActivity(a);
             }
         });
     }

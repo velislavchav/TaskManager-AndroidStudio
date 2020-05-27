@@ -18,7 +18,7 @@
             android:layout_marginTop="19dp"
             android:textSize="22sp"
             android:textColor="#000C5D"
-            android:text="Buy horse"
+            android:text="Buy horse or dog"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
@@ -43,6 +43,7 @@
             android:textSize="18sp"
             android:textColor="#F63EA5"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:gravity="right"
             android:text="Not today xD"
             android:layout_width="match_parent"
