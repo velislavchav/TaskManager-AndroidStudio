@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     Button btnAddNew;
     DatabaseReference reference;
     RecyclerView ourtodos;
-    ArrayList<MyToDo> list;
+    ArrayList<Task> list;
     ToDoAdapter todoAdapter;
 
     @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         // working with data
         ourtodos = findViewById(R.id.ourtodos);
         ourtodos.setLayoutManager(new LinearLayoutManager(this));
-        list = new ArrayList<MyToDo>();
+        list = new ArrayList<Task>();
 
         // get data from firebase
         reference = FirebaseDatabase.getInstance().getReference().child("TasksBox");
@@ -52,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 // retrieve data and replace layout
                 for (DataSnapshot dataSnap: dataSnapshot.getChildren()) {
-                    MyToDo todoData = dataSnap.getValue(MyToDo.class);
+                    Task todoData = dataSnap.getValue(Task.class);
                     list.add(todoData);
                 }
                 todoAdapter = new ToDoAdapter(MainActivity.this, list);

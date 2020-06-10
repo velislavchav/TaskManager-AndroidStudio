@@ -5,17 +5,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> {
     Context context;
-    ArrayList<MyToDo> myToDo;
+    ArrayList<Task> tasks;
 
-    public  ToDoAdapter(Context c, ArrayList<MyToDo> p) {
+    public  ToDoAdapter(Context c, ArrayList<Task> p) {
         context = c;
-        myToDo = p;
+        tasks = p;
     }
 
     @NonNull
@@ -26,10 +27,10 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder myViewHolder, int position) {
-        final String getTaskTitle = myToDo.get(position).getTitle();
-        final String getTaskDescription = myToDo.get(position).getDescription();
-        final String getTaskDate = myToDo.get(position).getDate();
-        final String getTaskKey = myToDo.get(position).getKey();
+        final String getTaskTitle = tasks.get(position).getTitle();
+        final String getTaskDescription = tasks.get(position).getDescription();
+        final String getTaskDate = tasks.get(position).getDate();
+        final String getTaskKey = tasks.get(position).getKey();
 
         myViewHolder.title.setText(getTaskTitle);
         myViewHolder.description.setText(getTaskDescription);
@@ -50,7 +51,7 @@ public class ToDoAdapter extends RecyclerView.Adapter<ToDoAdapter.MyViewHolder> 
 
     @Override
     public int getItemCount() {
-        return myToDo.size();
+        return tasks.size();
     }
 
     class  MyViewHolder extends RecyclerView.ViewHolder {

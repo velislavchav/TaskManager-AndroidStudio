@@ -1,14 +1,14 @@
 package com.example.day_schedule;
 
-public class MyToDo {
+public class Task {
     String title;
     String description;
     String date;
     String key;
 
-    public MyToDo() {} // second constrcutor for using MyToDo.class method
+    public Task() {} // second constrcutor for using MyToDo.class method
 
-    public MyToDo(String title, String description, String date, String key) {
+    public Task(String title, String description, String date, String key) {
         this.title = title;
         this.description = description;
         this.date = date;

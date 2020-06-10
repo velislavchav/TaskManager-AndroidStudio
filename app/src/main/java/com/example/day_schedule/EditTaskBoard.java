@@ -82,7 +82,7 @@ public class EditTaskBoard extends AppCompatActivity {
 
         // set event listeners for buttons
         final String toDoKey = getIntent().getStringExtra("key");
-        reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child("Task" + toDoKey);
+        reference = FirebaseDatabase.getInstance().getReference().child("TasksBox").child(toDoKey);
 
         btnUpdateTask.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,8 +94,11 @@ public class EditTaskBoard extends AppCompatActivity {
                         reference.child("description").setValue(toDoDescription.getText().toString());
                         reference.child("date").setValue(mDisplayDate.getText().toString());
 
+
                         Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
                         startActivity(a);
+
+                        Toast.makeText(getApplicationContext(), "Successfully updated task", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -127,8 +130,8 @@ public class EditTaskBoard extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(EditTaskBoard.this, MainActivity.class);
-                startActivity(a);
+                finish();
+                return;
             }
         });
     }
