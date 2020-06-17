@@ -107,8 +107,8 @@ public class NewTaskActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent a = new Intent(NewTaskActivity.this, MainActivity.class);
-                startActivity(a);
+                finish();
+                return;
             }
         });
 
